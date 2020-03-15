@@ -5,7 +5,7 @@ const port = 5000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//require('./routes')(app);
+require('./routes')(app);
 
 app.get('/', (req, res) => {
 	res.send('PORT 5000');
