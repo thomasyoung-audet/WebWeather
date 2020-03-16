@@ -8,9 +8,10 @@ module.exports = (app) => {
 
 		zipcode = req.body.zipcode;
 
-		if(!zipcode || zipcode.length < 6 || zipcode.length > 6) {//zip codes in canada
+		if(!zipcode || zipcode.length < 3 || zipcode.length > 6) {//zip codes in canada
 			res.redirect('/error');
 		} else { 
+			zipcode = zipcode.substring(0,3);
 			res.redirect('/current-weather');
 		}
 	})
@@ -18,7 +19,7 @@ module.exports = (app) => {
 	app.get('/search-location-weather', (req, res) => {
 		//build api URL with user zip
 		const baseUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';	
-		const apiId = '&appid=____&units=metric';
+		const apiId = ',ca&appid=___&units=metric';
 
 		const userLocation = (url1, url2, zipcode) => {
 
@@ -27,6 +28,7 @@ module.exports = (app) => {
 		};	
 
 		const apiUrl = userLocation(baseUrl, apiId, zipcode);
+		//console.log(apiUrl);
 
 		fetch(apiUrl)
 		.then(res => res.json())
